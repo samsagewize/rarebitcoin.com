@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rare Sats Explorer - Magisat Style</title>
+  <title>Rare Sats Explorer - Magisat Inspired</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
       background: #000000;
@@ -16,13 +17,12 @@
       flex-direction: column;
     }
     nav {
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(12px);
+      background: #0a0a0a;
+      border-bottom: 1px solid #222;
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
-      border-bottom: 1px solid #222;
     }
     .nav-container {
       max-width: 1400px;
@@ -40,25 +40,25 @@
     }
     .menu {
       display: flex;
-      gap: 40px;
+      gap: 32px;
       align-items: center;
     }
     .menu a {
-      color: #bbbbbb;
+      color: #cccccc;
       text-decoration: none;
       font-weight: 600;
-      transition: color 0.3s;
+      font-size: 1rem;
     }
     .menu a:hover {
       color: #ffffff;
     }
     .magisat-btn {
       background: #ff4500;
-      color: white !important;
-      padding: 12px 32px;
+      color: white;
+      padding: 12px 28px;
       border-radius: 999px;
-      font-weight: bold;
-      transition: background 0.3s;
+      font-weight: 700;
+      text-decoration: none;
     }
     .magisat-btn:hover {
       background: #ff6500;
@@ -69,19 +69,19 @@
     }
     header {
       text-align: center;
-      padding: 100px 20px 60px;
+      padding: 120px 32px 80px;
       background: #0a0a0a;
     }
     h1 {
-      font-size: 4rem;
+      font-size: 4.5rem;
       font-weight: 900;
       margin: 0;
     }
     .subtitle {
-      font-size: 1.5rem;
-      opacity: 0.8;
-      max-width: 800px;
-      margin: 24px auto 0;
+      font-size: 1.6rem;
+      opacity: 0.85;
+      max-width: 900px;
+      margin: 32px auto 0;
     }
     .container {
       max-width: 1400px;
@@ -89,114 +89,120 @@
       padding: 0 32px;
     }
     section {
-      margin-bottom: 120px;
+      margin-bottom: 140px;
     }
     h2 {
-      font-size: 2.8rem;
+      font-size: 3rem;
+      font-weight: 800;
       margin-bottom: 48px;
     }
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      margin-bottom: 80px;
     }
     .stat-card {
       background: #111111;
-      padding: 24px;
-      border-radius: 16px;
+      padding: 32px;
+      border-radius: 20px;
       border: 1px solid #333;
       text-align: center;
     }
     .stat-card h3 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       opacity: 0.7;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      font-weight: 500;
     }
     .stat-card p {
-      font-size: 2rem;
-      font-weight: bold;
+      font-size: 2.5rem;
+      font-weight: 800;
       margin: 0;
       color: #ff4500;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 40px;
     }
     .card {
       background: #111111;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
       border: 1px solid #333;
-      transition: all 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 48px rgba(255, 69, 0, 0.15);
+      transform: translateY(-12px);
+      box-shadow: 0 32px 64px rgba(255, 69, 0, 0.2);
     }
     .card img {
       width: 100%;
-      height: 280px;
+      height: 300px;
       object-fit: cover;
     }
     .card-content {
-      padding: 24px;
+      padding: 32px;
     }
     .card h3 {
-      margin: 0 0 16px;
-      font-size: 1.5rem;
+      margin: 0 0 20px;
+      font-size: 1.8rem;
+      font-weight: 700;
     }
     .price {
-      font-size: 2rem;
-      font-weight: bold;
+      font-size: 2.4rem;
+      font-weight: 800;
       color: #ff4500;
-      margin: 8px 0;
+      margin: 12px 0;
     }
     .traits {
-      opacity: 0.8;
-      font-size: 1rem;
-      margin: 16px 0;
+      opacity: 0.85;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 20px 0;
     }
     .details {
       display: flex;
       justify-content: space-between;
       opacity: 0.7;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
     .loading {
       text-align: center;
-      padding: 80px;
-      font-size: 1.5rem;
+      padding: 100px;
+      font-size: 1.8rem;
       opacity: 0.6;
     }
     .error {
       color: #ff4444;
       text-align: center;
-      padding: 40px;
+      padding: 60px;
+      font-size: 1.4rem;
     }
     footer {
       text-align: center;
-      padding: 48px;
+      padding: 60px;
       background: #000000;
       border-top: 1px solid #222;
       opacity: 0.8;
+      font-size: 1rem;
     }
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      h1 { font-size: 3.5rem; }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
     <div class="nav-container">
-      <a href="#" class="logo">RareSats</a>
+      <a href="#" class="logo">RareSats Explorer</a>
       <div class="menu">
         <a href="#categories">Categories</a>
         <a href="#listings">Listings</a>
-        <a href="https://magisat.io/" target="_blank" class="magisat-btn">Magisat.io →</a>
+        <a href="https://magisat.io/" target="_blank" class="magisat-btn">Visit Magisat.io →</a>
       </div>
     </div>
   </nav>
@@ -204,22 +210,22 @@
   <main>
     <header>
       <h1>Rare Sats Explorer</h1>
-      <p class="subtitle">Explore unique Bitcoin satoshis – Design inspired by the official Magisat.io marketplace</p>
+      <p class="subtitle">Discover and explore unique Bitcoin satoshis – styled after the official Magisat.io marketplace</p>
     </header>
 
     <div class="container">
       <section id="categories">
-        <h2>Categories</h2>
-        <div id="category-grid" class="grid loading">Loading categories...</div>
+        <h2>Top Categories</h2>
+        <div id="category-grid" class="grid loading">Loading categories from Magisat API...</div>
       </section>
 
       <section id="listings">
-        <h2>All Listings</h2>
-        <div class="stats-grid" id="global-stats">
-          <div class="stat-card"><h3>Floor Unit Price</h3><p id="g-floor">-</p></div>
-          <div class="stat-card"><h3>Total Volume</h3><p id="g-volume">-</p></div>
-          <div class="stat-card"><h3>Listings</h3><p id="g-listings">-</p></div>
-          <div class="stat-card"><h3>Circulating Supply</h3><p id="g-supply">-</p></div>
+        <h2>Active Listings</h2>
+        <div class="stats-grid">
+          <div class="stat-card"><h3>Floor Price</h3><p id="stat-floor">-</p></div>
+          <div class="stat-card"><h3>7d Volume</h3><p id="stat-volume">-</p></div>
+          <div class="stat-card"><h3>Listings</h3><p id="stat-listings">-</p></div>
+          <div class="stat-card"><h3>Supply</h3><p id="stat-supply">-</p></div>
         </div>
         <div id="listings-grid" class="grid loading">Loading listings...</div>
       </section>
@@ -227,36 +233,39 @@
   </main>
 
   <footer>
-    <p>Unofficial Explorer • Powered by Magisat API • Design closely matches magisat.io category & marketplace pages</p>
+    <p>Unofficial explorer • Powered by Magisat API • Design inspired by magisat.io (dark theme with orange accents, clean cards, Inter font)</p>
   </footer>
 
   <script>
     const API_BASE = 'https://magisat.io/external/v1';
-    const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your key
+    const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual Magisat API key
 
     async function loadCategories() {
       const grid = document.getElementById('category-grid');
       if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
-        grid.innerHTML = '<p class="error">Add your API key for live data. Showing demo in Magisat style.</p>';
+        grid.innerHTML = '<p class="error">Add your Magisat API key to load live data. Demo styled like Magisat.io.</p>';
         const demo = [
-          { name: 'Uncommon', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75', floor: '0.00027', volume: 'High', listings: '1,128', supply: 'Unlimited' },
-          { name: 'Pizza', picture: 'https://ordiscan.com/content/5e0b8c8a8f9d4d5a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f', floor: '0.05', volume: 'Medium', listings: '45', supply: '10,000' },
+          { name: 'Pizza', picture: 'https://cdn.prod.website-files.com/624b08d53d7ac65cf7c11d91/66b3d3f30344e78f23b6dc09_65cb635b216560ab647850ff_GETFggBbIAA_HNM.png', floor: '0.05', volume: 'High', listings: '45', supply: '10,000' },
           { name: 'Nakamoto', picture: 'https://i.ytimg.com/vi/0i0D3_2h-H0/maxresdefault.jpg', floor: '1.2', volume: 'Premium', listings: '12', supply: 'Limited' },
           { name: 'Vintage', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75', floor: '0.8', volume: 'Strong', listings: '89', supply: 'Early Blocks' },
+          { name: 'Block 9 450x', picture: 'https://stouy.com/wp-content/uploads/2023/11/block-9-rare-sats.jpg', floor: '2.0', volume: 'Historic', listings: '5', supply: 'Ultra Rare' },
           { name: 'Palindrome', picture: 'https://pbs.twimg.com/media/F3DpZovasAANDRB.png', floor: '0.1', volume: 'Growing', listings: '3,088', supply: 'Variable' },
-          { name: 'Block 9 450x', picture: 'https://stouy.com/wp-content/uploads/2023/11/block-9-rare-sats.jpg', floor: '2.0', volume: 'Historic', listings: '5', supply: 'Ultra Rare' }
+          { name: 'Hitman', picture: 'https://cdn.prod.website-files.com/687df2df76e1c946ba38116f/687df2df76e1c946ba3818b4_67247300070155fc185e6d30_AD_4nXfM4u9SJV1jUuOY4_pIF7xKlnyutTZcOsgYe3JY56EBGnhsVZPTDqaBnCKENFFbw8yx39rwc7MOURvlfBZLNeRjFwrfZlWgfuc5HBxebOnrHfa219MIF0sBg0QkHe7kEtBFchlUX3sTF2vj4K0s2k84t-A.jpeg', floor: '0.3', volume: 'Medium', listings: '120', supply: 'Special' }
         ];
-        demo.forEach(item => appendCard(item, grid));
+        demo.forEach(tag => appendCard(tag, grid));
         return;
       }
 
       try {
-        const res = await fetch(`${API_BASE}/tag?limit=30`, { headers: { 'X-MGST-API-KEY': API_KEY } });
-        const data = await res.json();
+        const response = await fetch(`${API_BASE}/tag?limit=30`, {
+          headers: { 'X-MGST-API-KEY': API_KEY }
+        });
+        if (!response.ok) throw new Error('API request failed');
+        const data = await response.json();
         grid.innerHTML = '';
         data.forEach(tag => appendCard(tag, grid));
-      } catch (e) {
-        grid.innerHTML = `<p class="error">Error: ${e.message}</p>`;
+      } catch (error) {
+        grid.innerHTML = `<p class="error">Error loading categories: ${error.message}</p>`;
       }
     }
 
@@ -264,7 +273,7 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <img src="${item.picture || 'https://via.placeholder.com/400x280?text=' + (item.name || 'Rare Sat')}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/400x280?text=No+Image';">
+        <img src="${item.picture || 'https://via.placeholder.com/400x300?text=' + (item.name || 'Rare+Sat')}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image';">
         <div class="card-content">
           <h3>${item.name || 'Unknown'}</h3>
           <p class="price">${item.floor ? item.floor + ' BTC' : 'N/A'}</p>
@@ -280,37 +289,41 @@
     async function loadListings() {
       const grid = document.getElementById('listings-grid');
       if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
-        grid.innerHTML = '<p class="error">Add API key for live listings. Demo in Magisat style.</p>';
+        grid.innerHTML = '<p class="error">Add your API key for live listings. Demo in Magisat style.</p>';
         return;
       }
 
       try {
-        const res = await fetch(`${API_BASE}/listing`, {
+        const response = await fetch(`${API_BASE}/listing`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-MGST-API-KEY': API_KEY },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-MGST-API-KEY': API_KEY
+          },
           body: JSON.stringify({ limit: 30 })
         });
-        const data = await res.json();
+        if (!response.ok) throw new Error('API request failed');
+        const data = await response.json();
         grid.innerHTML = '';
         data.forEach(listing => {
           const card = document.createElement('div');
           card.className = 'card';
           card.innerHTML = `
-            <img src="https://via.placeholder.com/400x280?text=UTXO+${listing.utxo?.slice(0,10)}" alt="Listing">
+            <img src="https://via.placeholder.com/400x300?text=UTXO+${listing.utxo?.slice(0,10) || 'N/A'}" alt="Listing">
             <div class="card-content">
               <h3>#${listing.listingId || 'N/A'}</h3>
               <p class="price">${listing.price || 'N/A'} BTC</p>
               <p class="traits">${Array.isArray(listing.sattributes) ? listing.sattributes.join(' • ') : 'N/A'}</p>
               <div class="details">
-                <span>Block ${listing.block || 'N/A'}</span>
-                <span>UTXO ${listing.utxo?.slice(0,12) + '...' || 'N/A'}</span>
+                <span>Block: ${listing.block || 'N/A'}</span>
+                <span>UTXO: ${listing.utxo?.slice(0,12) + '...' || 'N/A'}</span>
               </div>
             </div>
           `;
           grid.appendChild(card);
         });
-      } catch (e) {
-        grid.innerHTML = `<p class="error">Error: ${e.message}</p>`;
+      } catch (error) {
+        grid.innerHTML = `<p class="error">Error loading listings: ${error.message}</p>`;
       }
     }
 
