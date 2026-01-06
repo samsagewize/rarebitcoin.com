@@ -3,26 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rare Sats Explorer - Powered by Magisat API</title>
+  <title>Rare Sats Explorer</title>
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #121212;
+      background: #0f172a; /* Dark slate for a slick modern feel */
       color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+    }
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    .menu {
+      display: flex;
+      gap: 30px;
+    }
+    .menu a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .menu a:hover {
+      color: #60a5fa;
+    }
+    .magisat-btn {
+      background: #3b82f6;
+      color: white !important;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .magisat-btn:hover {
+      background: #2563eb;
+    }
+    main {
+      margin-top: 80px; /* Space for fixed nav */
+      flex: 1;
     }
     header {
       text-align: center;
-      padding: 40px 20px;
+      padding: 60px 20px 40px;
       background: linear-gradient(to bottom, #1e3a8a, #111827);
     }
     h1 {
       margin: 0;
-      font-size: 2.5em;
+      font-size: 3em;
     }
     p.subtitle {
-      font-size: 1.2em;
+      font-size: 1.3em;
       opacity: 0.9;
     }
     .container {
@@ -31,143 +85,172 @@
       padding: 20px;
     }
     section {
-      margin-bottom: 60px;
+      margin-bottom: 80px;
     }
     h2 {
       text-align: center;
-      margin-bottom: 30px;
-      font-size: 2em;
+      margin-bottom: 40px;
+      font-size: 2.2em;
+      color: #60a5fa;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
     }
     .card {
-      background: #1e1e1e;
-      border-radius: 12px;
+      background: #1e293b;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
-      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transition: transform 0.4s, box-shadow 0.4s;
     }
     .card:hover {
-      transform: translateY(-10px);
+      transform: translateY(-15px);
+      box-shadow: 0 20px 40px rgba(96,165,250,0.2);
     }
     .card img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .card:hover img {
+      transform: scale(1.05);
     }
     .card-content {
-      padding: 15px;
+      padding: 20px;
     }
     .card h3 {
-      margin: 10px 0;
+      margin: 0 0 15px;
+      font-size: 1.4em;
     }
     .card p {
-      margin: 5px 0;
-      font-size: 0.9em;
-      opacity: 0.8;
+      margin: 8px 0;
+      opacity: 0.85;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #1e1e1e;
-      border-radius: 12px;
+      background: #1e293b;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
     th, td {
-      padding: 12px;
+      padding: 15px;
       text-align: left;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #334155;
     }
     th {
-      background: #2d2d2d;
+      background: #334155;
+      font-weight: bold;
+    }
+    tr:hover {
+      background: #334155;
     }
     .loading {
       text-align: center;
-      padding: 40px;
-      font-style: italic;
+      padding: 60px;
+      font-size: 1.2em;
       opacity: 0.7;
     }
     .error {
       color: #ff6b6b;
       text-align: center;
+      padding: 20px;
     }
     footer {
       text-align: center;
-      padding: 20px;
-      background: #0a0a0a;
-      font-size: 0.9em;
+      padding: 30px;
+      background: #020617;
+      font-size: 0.95em;
+      margin-top: auto;
     }
     .hero-images {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 15px;
-      margin: 30px 0;
+      gap: 20px;
+      margin: 40px 0;
     }
     .hero-images img {
-      max-width: 300px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      max-width: 320px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s;
+    }
+    .hero-images img:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Rare Sats Explorer</h1>
-    <p class="subtitle">Discover and visualize unique Bitcoin satoshis using the Magisat API</p>
-    <div class="hero-images">
-      <img src="https://cdn.prod.website-files.com/624b08d53d7ac65cf7c11d91/673b6b8b3ce129e21d3d1ec9_What%20Are%20Rare%20Sats_%20A%20Beginner%27s%20Guide%20to%20Rare%20Satoshis-min.jpg" alt="Rare Sats Overview">
-      <img src="https://stouy.com/wp-content/uploads/2023/11/satributes-rare-sat-attributes-magic-eden-bitcoin.jpg" alt="Rare Sat Attributes">
-      <img src="https://miro.medium.com/v2/resize:fit:1400/1*gJLpimFoW2guLcncsvnAnQ.png" alt="Rare Sats Types">
-      <img src="https://ordiscan.com/images/og/rare-sats.png" alt="Rare Sats Collection">
-      <img src="https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75" alt="Vintage Rare Sat Example">
+  <nav>
+    <div class="nav-container">
+      <a href="#" class="logo">RareSats Explorer</a>
+      <div class="menu">
+        <a href="#categories">Categories</a>
+        <a href="#listings">Listings</a>
+        <a href="https://magisat.io/" target="_blank" class="magisat-btn">Visit Magisat →</a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <div class="container">
-    <section id="categories">
-      <h2>Rare Sat Categories</h2>
-      <div id="category-grid" class="grid loading">Loading categories from Magisat API...</div>
-    </section>
+  <main>
+    <header>
+      <h1>Rare Sats Explorer</h1>
+      <p class="subtitle">Discover unique Bitcoin satoshis – powered by the Magisat API</p>
+      <div class="hero-images">
+        <img src="https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fscan-wallet.3935f749.png&w=1920&q=75" alt="Magisat Wallet Scan">
+        <img src="https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fafter-scan.d9502fd9.png&w=1920&q=75" alt="Magisat After Scan">
+        <img src="https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fog-image.4f44d09b.jpg&w=3840&q=75" alt="Rare Sats OG Image">
+        <img src="https://i.ytimg.com/vi/eRRUKVu8d-8/maxresdefault.jpg" alt="Rare Sats Video Thumbnail">
+        <img src="https://i.ytimg.com/vi/KbDplurLm8M/maxresdefault.jpg" alt="Rare Sats Exploration">
+      </div>
+    </header>
 
-    <section id="listings">
-      <h2>Active Listings</h2>
-      <div id="listings-container" class="loading">Loading active listings...</div>
-    </section>
-  </div>
+    <div class="container">
+      <section id="categories">
+        <h2>Rare Sat Categories</h2>
+        <div id="category-grid" class="grid loading">Loading live data from Magisat API...</div>
+      </section>
+
+      <section id="listings">
+        <h2>Active Listings</h2>
+        <div id="listings-container" class="loading">Loading active listings...</div>
+      </section>
+    </div>
+  </main>
 
   <footer>
-    <p>Built with Magisat API • Data updates live • Replace API key to enable full functionality</p>
+    <p>Unofficial Rare Sats Explorer • Built with ❤️ using Magisat API • Data updates live</p>
+    <p>Replace the API key in the script for full real-time functionality</p>
   </footer>
 
   <script>
     const API_BASE = 'https://magisat.io/external/v1';
-    const API_KEY = 'YOUR_API_KEY_HERE'; // ⚠️ Replace with your actual Magisat API key!
+    const API_KEY = 'YOUR_API_KEY_HERE'; // ⚠️ Get your free key from Magisat and replace here!
 
     async function loadCategories() {
       const grid = document.getElementById('category-grid');
       if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
-        grid.innerHTML = '<p class="error">Please add your Magisat API key in the script to load real data.</p><p>For demo, here are example rare sat types with visuals:</p>';
-        // Fallback static demo cards with images
+        grid.innerHTML = '<p class="error">Add your Magisat API key to load live data.</p><p>Demo mode with popular rare sat examples:</p>';
         const demoTags = [
-          { name: 'Pizza', picture: 'https://cdn.prod.website-files.com/624b08d53d7ac65cf7c11d91/66b3d3f30344e78f23b6dc09_65cb635b216560ab647850ff_GETFggBbIAA_HNM.png', supply: '10,000', floor: '0.05 BTC', volume: 'High' },
-          { name: 'Nakamoto', picture: 'https://i.ytimg.com/vi/0i0D3_2h-H0/maxresdefault.jpg', supply: 'Limited', floor: '1.2 BTC', volume: 'Very High' },
-          { name: 'Vintage', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75', supply: 'Early Blocks', floor: '0.8 BTC', volume: 'Medium' },
-          { name: 'Block 9', picture: 'https://stouy.com/wp-content/uploads/2023/11/block-9-rare-sats.jpg', supply: 'Rare', floor: '2.0 BTC', volume: 'High' },
-          { name: 'Palindrome', picture: 'https://pbs.twimg.com/media/F3DpZovasAANDRB.png', supply: 'Variable', floor: '0.1 BTC', volume: 'Growing' },
-          { name: 'Hitman', picture: 'https://cdn.prod.website-files.com/687df2df76e1c946ba38116f/687df2df76e1c946ba3818b4_67247300070155fc185e6d30_AD_4nXfM4u9SJV1jUuOY4_pIF7xKlnyutTZcOsgYe3JY56EBGnhsVZPTDqaBnCKENFFbw8yx39rwc7MOURvlfBZLNeRjFwrfZlWgfuc5HBxebOnrHfa219MIF0sBg0QkHe7kEtBFchlUX3sTF2vj4K0s2k84t-A.jpeg', supply: 'Special', floor: '0.3 BTC', volume: 'Medium' }
+          { name: 'Pizza', picture: 'https://ordiscan.com/content/5e0b8c8a8f9d4d5a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f', supply: '~10,000', floor: '0.05 BTC', volume: 'High' },
+          { name: 'Nakamoto', picture: 'https://i.ytimg.com/vi/0i0D3_2h-H0/maxresdefault.jpg', supply: 'Very Limited', floor: '1+ BTC', volume: 'Premium' },
+          { name: 'Vintage', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75', supply: 'Early Blocks', floor: '0.8 BTC', volume: 'Strong' },
+          { name: 'Block 9 450x', picture: 'https://stouy.com/wp-content/uploads/2023/11/block-9-rare-sats.jpg', supply: 'Ultra Rare', floor: '2+ BTC', volume: 'Historic' },
+          { name: 'Palindrome', picture: 'https://pbs.twimg.com/media/F3DpZovasAANDRB.png', supply: 'Mathematical', floor: '0.1 BTC', volume: 'Growing' },
+          { name: 'Hitman', picture: 'https://cdn.prod.website-files.com/687df2df76e1c946ba38116f/687df2df76e1c946ba3818b4_67247300070155fc185e6d30_AD_4nXfM4u9SJV1jUuOY4_pIF7xKlnyutTZcOsgYe3JY56EBGnhsVZPTDqaBnCKENFFbw8yx39rwc7MOURvlfBZLNeRjFwrfZlWgfuc5HBxebOnrHfa219MIF0sBg0QkHe7kEtBFchlUX3sTF2vj4K0s2k84t-A.jpeg', supply: 'Exotic', floor: '0.3 BTC', volume: 'Niche' },
+          { name: 'Epic', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fog-image.4f44d09b.jpg&w=3840&q=75', supply: 'Halving Era', floor: 'Varies', volume: 'High' }
         ];
         demoTags.forEach(tag => appendCategoryCard(tag));
         return;
       }
 
       try {
-        const response = await fetch(`${API_BASE}/tag?limit=20`, {
+        const response = await fetch(`${API_BASE}/tag?limit=30`, {
           headers: { 'X-MGST-API-KEY': API_KEY }
         });
         if (!response.ok) throw new Error('API request failed');
@@ -184,9 +267,9 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <img src="${tag.picture || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${tag.name}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image';">
+        <img src="${tag.picture || 'https://via.placeholder.com/400x220?text=' + (tag.name || 'Rare+Sat')}" alt="${tag.name}" onerror="this.src='https://via.placeholder.com/400x220?text=No+Image';">
         <div class="card-content">
-          <h3>${tag.name || 'Unknown'}</h3>
+          <h3>${tag.name || 'Unknown Category'}</h3>
           <p>Supply: ${tag.supply || 'N/A'}</p>
           <p>Floor Price: ${tag.floor ? tag.floor + ' BTC' : 'N/A'}</p>
           <p>Volume: ${tag.volume || 'N/A'}</p>
@@ -198,7 +281,7 @@
     async function loadListings() {
       const container = document.getElementById('listings-container');
       if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
-        container.innerHTML = '<p class="error">Add your API key to see real listings. This is a demo site.</p>';
+        container.innerHTML = '<p class="error">Add your API key for live listings. Demo mode active.</p>';
         return;
       }
 
@@ -209,7 +292,7 @@
             'Content-Type': 'application/json',
             'X-MGST-API-KEY': API_KEY
           },
-          body: JSON.stringify({ limit: 20 })
+          body: JSON.stringify({ limit: 30 })
         });
         if (!response.ok) throw new Error('API request failed');
         const data = await response.json();
