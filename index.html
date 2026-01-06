@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rare Sats Explorer - Powered by Magisat API</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #121212;
+      color: #e0e0e0;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #1e3a8a, #111827);
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    p.subtitle {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 60px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card h3 {
+      margin: 10px 0;
+    }
+    .card p {
+      margin: 5px 0;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #333;
+    }
+    th {
+      background: #2d2d2d;
+    }
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-style: italic;
+      opacity: 0.7;
+    }
+    .error {
+      color: #ff6b6b;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0a0a0a;
+      font-size: 0.9em;
+    }
+    .hero-images {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 30px 0;
+    }
+    .hero-images img {
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rare Sats Explorer</h1>
+    <p class="subtitle">Discover and visualize unique Bitcoin satoshis using the Magisat API</p>
+    <div class="hero-images">
+      <img src="https://cdn.prod.website-files.com/624b08d53d7ac65cf7c11d91/673b6b8b3ce129e21d3d1ec9_What%20Are%20Rare%20Sats_%20A%20Beginner%27s%20Guide%20to%20Rare%20Satoshis-min.jpg" alt="Rare Sats Overview">
+      <img src="https://stouy.com/wp-content/uploads/2023/11/satributes-rare-sat-attributes-magic-eden-bitcoin.jpg" alt="Rare Sat Attributes">
+      <img src="https://miro.medium.com/v2/resize:fit:1400/1*gJLpimFoW2guLcncsvnAnQ.png" alt="Rare Sats Types">
+      <img src="https://ordiscan.com/images/og/rare-sats.png" alt="Rare Sats Collection">
+      <img src="https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75" alt="Vintage Rare Sat Example">
+    </div>
+  </header>
+
+  <div class="container">
+    <section id="categories">
+      <h2>Rare Sat Categories</h2>
+      <div id="category-grid" class="grid loading">Loading categories from Magisat API...</div>
+    </section>
+
+    <section id="listings">
+      <h2>Active Listings</h2>
+      <div id="listings-container" class="loading">Loading active listings...</div>
+    </section>
+  </div>
+
+  <footer>
+    <p>Built with Magisat API • Data updates live • Replace API key to enable full functionality</p>
+  </footer>
+
+  <script>
+    const API_BASE = 'https://magisat.io/external/v1';
+    const API_KEY = 'YOUR_API_KEY_HERE'; // ⚠️ Replace with your actual Magisat API key!
+
+    async function loadCategories() {
+      const grid = document.getElementById('category-grid');
+      if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+        grid.innerHTML = '<p class="error">Please add your Magisat API key in the script to load real data.</p><p>For demo, here are example rare sat types with visuals:</p>';
+        // Fallback static demo cards with images
+        const demoTags = [
+          { name: 'Pizza', picture: 'https://cdn.prod.website-files.com/624b08d53d7ac65cf7c11d91/66b3d3f30344e78f23b6dc09_65cb635b216560ab647850ff_GETFggBbIAA_HNM.png', supply: '10,000', floor: '0.05 BTC', volume: 'High' },
+          { name: 'Nakamoto', picture: 'https://i.ytimg.com/vi/0i0D3_2h-H0/maxresdefault.jpg', supply: 'Limited', floor: '1.2 BTC', volume: 'Very High' },
+          { name: 'Vintage', picture: 'https://magisat.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvintage.c95d7d09.png&w=1920&q=75', supply: 'Early Blocks', floor: '0.8 BTC', volume: 'Medium' },
+          { name: 'Block 9', picture: 'https://stouy.com/wp-content/uploads/2023/11/block-9-rare-sats.jpg', supply: 'Rare', floor: '2.0 BTC', volume: 'High' },
+          { name: 'Palindrome', picture: 'https://pbs.twimg.com/media/F3DpZovasAANDRB.png', supply: 'Variable', floor: '0.1 BTC', volume: 'Growing' },
+          { name: 'Hitman', picture: 'https://cdn.prod.website-files.com/687df2df76e1c946ba38116f/687df2df76e1c946ba3818b4_67247300070155fc185e6d30_AD_4nXfM4u9SJV1jUuOY4_pIF7xKlnyutTZcOsgYe3JY56EBGnhsVZPTDqaBnCKENFFbw8yx39rwc7MOURvlfBZLNeRjFwrfZlWgfuc5HBxebOnrHfa219MIF0sBg0QkHe7kEtBFchlUX3sTF2vj4K0s2k84t-A.jpeg', supply: 'Special', floor: '0.3 BTC', volume: 'Medium' }
+        ];
+        demoTags.forEach(tag => appendCategoryCard(tag));
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/tag?limit=20`, {
+          headers: { 'X-MGST-API-KEY': API_KEY }
+        });
+        if (!response.ok) throw new Error('API request failed');
+        const data = await response.json();
+        grid.innerHTML = '';
+        data.forEach(tag => appendCategoryCard(tag));
+      } catch (error) {
+        grid.innerHTML = `<p class="error">Error loading categories: ${error.message}</p>`;
+      }
+    }
+
+    function appendCategoryCard(tag) {
+      const grid = document.getElementById('category-grid');
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${tag.picture || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${tag.name}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image';">
+        <div class="card-content">
+          <h3>${tag.name || 'Unknown'}</h3>
+          <p>Supply: ${tag.supply || 'N/A'}</p>
+          <p>Floor Price: ${tag.floor ? tag.floor + ' BTC' : 'N/A'}</p>
+          <p>Volume: ${tag.volume || 'N/A'}</p>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+
+    async function loadListings() {
+      const container = document.getElementById('listings-container');
+      if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+        container.innerHTML = '<p class="error">Add your API key to see real listings. This is a demo site.</p>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/listing`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-MGST-API-KEY': API_KEY
+          },
+          body: JSON.stringify({ limit: 20 })
+        });
+        if (!response.ok) throw new Error('API request failed');
+        const data = await response.json();
+
+        container.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>Listing ID</th>
+                <th>Price (BTC)</th>
+                <th>Rarity Traits</th>
+                <th>Block / UTXO</th>
+              </tr>
+            </thead>
+            <tbody id="listings-tbody"></tbody>
+          </table>
+        `;
+
+        const tbody = document.getElementById('listings-tbody');
+        data.forEach(listing => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${listing.listingId || 'N/A'}</td>
+            <td>${listing.price || 'N/A'}</td>
+            <td>${Array.isArray(listing.sattributes) ? listing.sattributes.join(', ') : 'N/A'}</td>
+            <td>Block: ${listing.block || 'N/A'}<br>UTXO: ${listing.utxo || 'N/A'}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (error) {
+        container.innerHTML = `<p class="error">Error loading listings: ${error.message}</p>`;
+      }
+    }
+
+    window.onload = () => {
+      loadCategories();
+      loadListings();
+    };
+  </script>
+</body>
+</html>
